@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { User } from './user/entities/user.entity';
 import { Category } from './category/entities/category.entity';
 import { Transaction } from './transaction/entities/transaction.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { Transaction } from './transaction/entities/transaction.entity';
       }),
       inject: [ConfigService],
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
