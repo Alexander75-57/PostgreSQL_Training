@@ -19,13 +19,8 @@ export class UserController {
     return this.userService.createUser(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get()
-  findUser(@Body('id') id: number) {
-    return this.userService.findUser(id);
-  }
+  //   @Get()
+  //   findUser(@Body('id') id: number) {
+  //     return this.userService.findUser(id);
+  //   }
 }
