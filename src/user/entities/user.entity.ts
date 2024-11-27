@@ -21,6 +21,9 @@ export class User {
   @Column()
   lastName: string;
 
+  @Column()
+  nickName: string;
+
   @OneToMany(() => Category, (category) => category.user, {
     onDelete: 'CASCADE',
   })
@@ -33,6 +36,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: null })
+  jwt_token: string;
 
   @CreateDateColumn()
   createdAt: Date;

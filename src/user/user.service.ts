@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 import { CreateUserDto } from './dto/create.user.dto';
 import { User } from './entities/user.entity';
@@ -16,13 +17,37 @@ export class UserService {
       where: { nickName: createUserDto.nickName },
     });
     if (user) {
-      return 'This nickname is already in use';
+      throw new BadRequestException('This nickname is already in use');
+    } else {
+      const saltOrRounds = 10;
+      const password = createUserDto.password;
+      createUserDto.password = await bcrypt.hash(password, saltOrRounds);
+      const newUser = await this.userRepository.save(createUserDto);
+      return { newUser };
     }
-    const newUser = await this.userRepository.create(createUserDto);
-    return { newUser };
   }
 
-  //   async findUser(id: number) {
-  //     return `This action returns a #${id} user`;
-  //   }
+  async findUserByNickName(nickName: string) {
+    return await this.userRepository.findOne({ where: { nickName } });
+  }
+
+  async updateJwtToken(jwtToken: string, user: any): Promise<User> {
+    user.jwt_token = jwtToken;
+    return await this.userRepository.save(user);
+  }
+
+  async findUser(id: number) {
+    return await this.userRepository.findOne({ where: { id } });
+  }
 }
+
+// for test
+/*
+{
+  "fistName": "Name1",
+  "lastName": "Lastname1",
+  "nickName": "nick1",
+  "password": "password123"
+}
+
+*/
