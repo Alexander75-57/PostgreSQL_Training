@@ -9,6 +9,8 @@ import { Category } from './category/entities/category.entity';
 import { Transaction } from './transaction/entities/transaction.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoryModule } from './category/category.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    CategoryModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
