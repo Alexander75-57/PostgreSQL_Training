@@ -27,6 +27,16 @@ export class TransactionService {
       return 'Transaction was added';
     }
   }
+
+  async findAll(id: number) {
+    const transactions = await this.transactionRepository.find({
+      where: { user: { id: id } },
+      order: {
+        createdAt: 'DESC', // сортируем отновых к старым
+      },
+    });
+    return transactions;
+  }
 }
 
 /*

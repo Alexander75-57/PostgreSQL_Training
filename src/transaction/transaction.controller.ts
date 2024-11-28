@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -16,10 +17,16 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Post()
+  @Post('add')
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
   create(@Body() createTransactionDto: CreateTransactionDto, @Req() req) {
     return this.transactionService.create(createTransactionDto, +req.user.id);
+  }
+
+  @Get('find-all')
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    return this.transactionService.findAll(+req.user.id);
   }
 }
