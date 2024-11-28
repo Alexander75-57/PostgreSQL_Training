@@ -17,6 +17,6 @@ export class CreateTransactionDto {
   @IsNotEmpty()
   category: Category;
 
-  @IsNotEmpty()
+  //@IsNotEmpty()
   user: User;
 }
