@@ -34,6 +34,6 @@ export class TransactionService {
   "title": "Car",
   "amount": 15000,
   "type": "expenses",
-  "category": 2;
+  "category": 2
 }
 */

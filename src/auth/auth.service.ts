@@ -26,6 +26,7 @@ export class AuthService {
       if (isPasswordCorrect) {
         const payload = { nickName: user.nickName, id: user.id };
         const jwtToken = await this.jwtService.signAsync(payload);
+        await this.userService.updateJwtToken(jwtToken, user);
         return { jwtToken };
       } else {
         throw new UnauthorizedException('Password is not correct');

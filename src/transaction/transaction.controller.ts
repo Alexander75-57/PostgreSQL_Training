@@ -20,6 +20,7 @@ export class TransactionController {
   @UsePipes(new ValidationPipe())
   @UseGuards(JwtAuthGuard)
   create(@Body() createTransactionDto: CreateTransactionDto, @Req() req) {
-    return this.transactionService.create(createTransactionDto, +req.user.id);
+    console.log(createTransactionDto, req.user.id);
+    //return this.transactionService.create(createTransactionDto, +req.user.id);
   }
 }
