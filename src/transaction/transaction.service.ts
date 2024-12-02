@@ -66,10 +66,10 @@ export class TransactionService {
   async findAllWithPagination(id: number, page: number, limit: number) {
     const transactions = await this.transactionRepository.find({
       where: { user: { id: id } },
-      relations: {
-        user: true,
-        category: true,
-      },
+      //   relations: {
+      //     user: true,
+      //     category: true,
+      //   },
       order: {
         createdAt: 'DESC',
       },
@@ -78,6 +78,8 @@ export class TransactionService {
     });
     return transactions;
   }
+
+  async findOne() {}
 }
 
 /*
