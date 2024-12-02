@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { CreateTransactionDto } from './dto/transaction.dto';
 import { Transaction } from './entities/transaction.entity';
+import { UpdateTransactionDto } from './dto/update.transaction.dto';
 
 @Injectable()
 export class TransactionService {
@@ -36,6 +37,30 @@ export class TransactionService {
       },
     });
     return transactions;
+  }
+
+  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id: id },
+    });
+    if (!transaction) {
+      throw new BadRequestException('Transaction not found');
+    } else {
+      await this.transactionRepository.update(id, updateTransactionDto);
+      return 'Transaction was updated';
+    }
+  }
+
+  async remove(id: number) {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id: id },
+    });
+    if (!transaction) {
+      throw new BadRequestException('Transaction not found');
+    } else {
+      await this.transactionRepository.delete(id);
+      return 'Transaction was deleted';
+    }
   }
 }
 
