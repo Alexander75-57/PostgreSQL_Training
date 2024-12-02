@@ -62,6 +62,22 @@ export class TransactionService {
       return 'Transaction was deleted';
     }
   }
+
+  async findAllWithPagination(id: number, page: number, limit: number) {
+    const transactions = await this.transactionRepository.find({
+      where: { user: { id: id } },
+      relations: {
+        user: true,
+        category: true,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    return transactions;
+  }
 }
 
 /*

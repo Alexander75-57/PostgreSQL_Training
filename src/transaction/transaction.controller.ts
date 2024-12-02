@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UsePipes,
@@ -47,5 +48,19 @@ export class TransactionController {
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: number) {
     return this.transactionService.remove(+id);
+  }
+
+  @Get('pagination')
+  @UseGuards(JwtAuthGuard)
+  findAllWithPagination(
+    @Req() req,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 1,
+  ) {
+    return this.transactionService.findAllWithPagination(
+      +req.user.id,
+      +page,
+      +limit,
+    );
   }
 }
