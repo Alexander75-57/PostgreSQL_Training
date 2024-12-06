@@ -101,6 +101,7 @@ export class TransactionService {
       return acc + transaction.amount;
     }, 0);
     return { transactions, totalAmount };
+  }
 }
 
 /*
