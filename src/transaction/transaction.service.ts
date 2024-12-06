@@ -79,7 +79,28 @@ export class TransactionService {
     return transactions;
   }
 
-  async findOne() {}
+  async findOne(id) {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id: id },
+    });
+    if (!transaction) {
+      throw new BadRequestException('Transaction not found');
+    } else {
+      return transaction;
+    }
+  }
+
+  async findAllByType({ type, user }) {
+    const transactions = await this.transactionRepository.find({
+      where: { type: type, user: { id: user } },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+    const totalAmount = transactions.reduce((acc, transaction) => {
+      return acc + transaction.amount;
+    }, 0);
+    return { transactions, totalAmount };
 }
 
 /*
